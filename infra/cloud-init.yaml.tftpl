@@ -1,0 +1,44 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - debian-keyring
+  - debian-archive-keyring
+  - apt-transport-https
+  - curl
+  - gnupg
+  - unattended-upgrades
+  - apt-listchanges
+
+write_files:
+  - path: /etc/caddy/Caddyfile
+    owner: root:root
+    permissions: '0644'
+    content: |
+      www.${domain} {
+        redir https://${domain}{uri} permanent
+      }
+
+      ${domain} {
+        root * /var/www/site
+        file_server
+        encode gzip
+      }
+
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    owner: root:root
+    permissions: '0644'
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+
+runcmd:
+  - mkdir -p /var/www/site
+  - curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+  - curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' -o /etc/apt/sources.list.d/caddy-stable.list
+  - apt-get update
+  - apt-get install -y caddy
+  - id -u caddy >/dev/null 2>&1 || useradd --system --create-home --shell /usr/sbin/nologin caddy
+  - systemctl enable --now caddy
+  - systemctl enable --now unattended-upgrades
