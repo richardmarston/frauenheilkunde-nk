@@ -1,4 +1,9 @@
 .claude/
+.DS_Store
+
+# Full-resolution source photos (web-sized versions in assets/ are committed instead)
+assets/foto.jpg
+assets/portrait.jpg
 
 # OpenTofu
 infra/.terraform/

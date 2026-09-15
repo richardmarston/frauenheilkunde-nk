@@ -55,7 +55,11 @@ h3{font-size:25px;color:var(--rose);margin-bottom:10px}
   background:white;border:1px solid var(--line);border-radius:30px;
   padding:34px;box-shadow:var(--shadow)
 }
-.hero-card img{width:100%;max-width:430px;margin:auto}
+.hero-card img{width:100%;max-width:430px;height:auto;margin:auto}
+.hero-card img.hero-photo{max-width:280px}
+.hero-card-photo{max-width:324px;padding:22px;justify-self:start}
+.hero-card-photo .hero-meta{margin-top:14px;padding-top:13px;font-size:13px}
+.hero-card-photo .hero-meta .small{font-size:11px}
 .hero-meta{text-align:center;border-top:1px solid var(--line);margin-top:22px;padding-top:20px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
 section{padding:78px 0}
