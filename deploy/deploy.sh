@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 SERVER_IP="$(cd infra && tofu output -raw server_ipv4)"
 SSH_KEY="infra/.ssh/frauenheilkunde-nk"
 
-rsync -avz --delete \
+rsync -avz --delete --exclude=".DS_Store" \
   -e "ssh -i $SSH_KEY -o StrictHostKeyChecking=accept-new" \
   index.html css js assets \
   "root@$SERVER_IP:/var/www/site/"
