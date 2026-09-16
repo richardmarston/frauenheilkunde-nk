@@ -9,3 +9,17 @@ document.querySelectorAll('.js-book-btn').forEach(function (btn) {
     }
   });
 });
+
+// Deep link for the ordination-sign QR code (see /qr): landing on #book
+// auto-opens the booking dialog. The widget script loads async, so poll
+// briefly for it instead of assuming it's ready on DOMContentLoaded.
+if (window.location.hash === '#book') {
+  (function waitForCituroWidget(attemptsLeft) {
+    if (window.cituroWidget && typeof window.cituroWidget.show === 'function') {
+      window.cituroWidget.show();
+      return;
+    }
+    if (attemptsLeft <= 0) return;
+    setTimeout(function () { waitForCituroWidget(attemptsLeft - 1); }, 200);
+  })(25);
+}
