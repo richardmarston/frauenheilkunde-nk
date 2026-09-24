@@ -10,7 +10,7 @@ SSH_KEY="infra/.ssh/frauenheilkunde-nk"
 
 rsync -avz --delete --exclude=".DS_Store" \
   -e "ssh -i $SSH_KEY -o StrictHostKeyChecking=accept-new" \
-  index.html css js assets qr \
+  index.html impressum.html css js assets qr \
   "root@$SERVER_IP:/var/www/site/"
 
 echo "Deployed to $SERVER_IP"
